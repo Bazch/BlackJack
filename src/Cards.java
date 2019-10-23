@@ -5,6 +5,7 @@ public class Cards {
 
     private Suits suit;
     private Ranks rank;
+    private int value;
 
     static ArrayList<Cards> deck1 = new ArrayList<Cards>();
 
@@ -12,19 +13,7 @@ public class Cards {
         this.suit = suit;
         this.rank = rank;
     }
-
-    public enum Suits {
-        HARTEN,
-        KLAVER,
-        SCHOPPEN,
-        RUITEN
-    }
-
-    public enum Ranks {
-        TWEE, DRIE, VIER, VIJF, ZES, ZEVEN, ACHT, NEGEN, TIEN, BOER, VROUW, HEER, AAS
-    }
-
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         for(Suits s : Suits.values()){
            for(Ranks r : Ranks.values()){
                deck1.add(new Cards(s,r));
