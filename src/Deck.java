@@ -5,7 +5,7 @@ public class Deck {
 
     //VARIABLES
     private ArrayList<Cards> content;
-    private ArrayList<Cards> hand;
+
 
     //CONSTRUCTOR
     public Deck() {
@@ -21,15 +21,10 @@ public class Deck {
     public ArrayList<Cards> getContent() {
         return content;
     }
-    public ArrayList<Cards> getHand() {
-        return hand;
-    }
     public void setContent(ArrayList<Cards> content) {
         this.content = content;
     }
-    public void setHand(ArrayList<Cards> hand) {
-        this.hand = hand;
-    }
+
 
     //METHODS
     public void showDeck(){
@@ -49,11 +44,11 @@ public class Deck {
 //            System.out.print(content.get(i).getSuit() + " " + content.get(i).getRank() + "  ");
 //        }
     }
-    public void drawCard() {
+    public void drawCard(Player speler) {
         if(content.size() > 0) {
             System.out.println("\nU heeft een: " + content.get(0).getSuit() + " " + content.get(0).getRank() + "\n" +
                     "de waarde is: " + content.get(0).getValue());
-            hand.add(content.get(0));
+            speler.setHand(content.get(0));
             content.remove(0);
 
         }else{
