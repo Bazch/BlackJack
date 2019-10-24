@@ -14,13 +14,13 @@ public enum Ranks {
     AAS(11);
 
 
-    public final int value;
+    private final int rankValue;
 
     private Ranks (int value){
-        this.value = value;
+        this.rankValue = value;
     }
 
-    public int getValue() {
-        return value;
+    public int getRankValue() {
+        return rankValue;
     }
 }
