@@ -17,7 +17,7 @@ public class Cards {
         return rank;
     }
 
-    public int getValue() {
-        return value;
+   public void setValue(int value) {
+        this.value = value;
     }
 }
