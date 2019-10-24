@@ -3,62 +3,63 @@ import java.util.Collections;
 
 public class Deck {
 
-    public static ArrayList<Cards> content () {
-        ArrayList<Cards> deck = new ArrayList<Cards>();
+    //VARIABLES
+    private ArrayList<Cards> content;
+    private ArrayList<Cards> hand;
+
+    //CONSTRUCTOR
+    public Deck() {
+        content = new ArrayList<Cards>();
         for (Suits s : Suits.values()) {
             for (Ranks r : Ranks.values()) {
-                deck.add(new Cards(s, r));
+                content.add(new Cards(s, r));
             }
         }
-        return deck;
     }
 
-    public static void shuffleDeck (ArrayList<Cards> a) {
-        System.out.println("shuffling");
-        Collections.shuffle(a);
-        System.out.println("Shuffled deck: ");
-        for (int i = 0; i < a.size(); i++) {
-            System.out.print(a.get(i).getSuit() + " " + a.get(i).getRank() + "  ");
+    //GETTERS & SETTERS
+    public ArrayList<Cards> getContent() {
+        return content;
+    }
+    public ArrayList<Cards> getHand() {
+        return hand;
+    }
+    public void setContent(ArrayList<Cards> content) {
+        this.content = content;
+    }
+    public void setHand(ArrayList<Cards> hand) {
+        this.hand = hand;
+    }
+
+    //METHODS
+    public void showDeck(){
+        if(content.size() > 0){
+            System.out.print("\nHuidig deck: \n");
+            for (int i = 0; i < content.size(); i++) {
+                System.out.print(content.get(i).getSuit() + " " + content.get(i).getRank() + "  ");
+            }
+            System.out.println(" ");
         }
     }
-
-    public static void drawCard(ArrayList<Cards> a) {
-        System.out.println("U heeft een: " + a.get(0).getSuit() + " " + a.get(0).getRank() + "\n" +
-                "de waarde is: " + a.get(0).getValue() + "\n");
-        a.remove(0);
-        System.out.println("Nieuw deck: ");
-        for (int i = 0; i < a.size(); i++) {
-            System.out.print(a.get(i).getSuit() + " " + a.get(i).getRank() + "  ");
-        }
-    }
-
-
-//    public static void main(String[] args) {
-//        for (Suits s : Suits.values()) {
-//            for (Ranks r : Ranks.values()) {
-//                deck1.add(new Cards(s, r));
-//            }
-//        }
-//        System.out.println("Sorted deck: ");
-//        for(int i=0; i < deck1.size(); i++) {
-//            System.out.print(deck1.get(i).getSuit() + " " + deck1.get(i).getRank() + "  ");
-//        }
-//
-//        Collections.shuffle(deck1);
+    public void shuffle() {
+        System.out.println("\nShuffling deck");
+        Collections.shuffle(content);
 //        System.out.println("Shuffled deck: ");
-//        for(int i=0; i < deck1.size(); i++) {
-//            System.out.print(deck1.get(i).getSuit() + " " + deck1.get(i).getRank() + "  ");
+//        for (int i = 0; i < content.size(); i++) {
+//            System.out.print(content.get(i).getSuit() + " " + content.get(i).getRank() + "  ");
 //        }
-//        shuffleDeck(deck1);
-//
-//        System.out.println("\n\ndruk op f om mee te doen");
-//        char userStart = input.next().charAt(0);
-//        if (userStart == 'f') {
-//            drawCard(deck1);
-//
-//        }
-//    }
-//
+    }
+    public void drawCard() {
+        if(content.size() > 0) {
+            System.out.println("\nU heeft een: " + content.get(0).getSuit() + " " + content.get(0).getRank() + "\n" +
+                    "de waarde is: " + content.get(0).getValue());
+            hand.add(content.get(0));
+            content.remove(0);
+
+        }else{
+            System.out.println("\nDeck is leeg");
+        }
+    }
 
 }
 

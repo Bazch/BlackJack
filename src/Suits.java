@@ -9,4 +9,8 @@ public enum Suits {
     private Suits(String kleur){
         this.kleur = kleur;
     }
+
+    public String getKleur() {
+        return kleur;
+    }
 }
