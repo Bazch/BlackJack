@@ -36,6 +36,7 @@ public class Deck {
             System.out.println(" ");
         }
     }
+
     public void shuffle() {
         System.out.println("\nShuffling deck");
         Collections.shuffle(content);
@@ -44,6 +45,7 @@ public class Deck {
 //            System.out.print(content.get(i).getSuit() + " " + content.get(i).getRank() + "  ");
 //        }
     }
+
     public void drawCard(Player speler) {
         if(content.size() > 0) {
             System.out.println("\nU heeft een: " + content.get(0).getSuit() + " " + content.get(0).getRank() + "\n" +
@@ -52,6 +54,20 @@ public class Deck {
             content.remove(0);
 
         }else{
+            System.out.println("\nDeck is leeg");
+        }
+    }
+
+    public void drawTwo(Player speler){
+        if(content.size() > 0) {
+            System.out.println("\nU heeft een: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " " +
+                    content.get(1).getSuit() + " " + content.get(1).getRank() + "\n" +
+                    "de waarde is: " + (content.get(0).getValue() + content.get(1).getValue()));
+            speler.setHand(content.get(0));
+            content.remove(0);
+            speler.setHand(content.get(0));
+            content.remove(0);
+        }else {
             System.out.println("\nDeck is leeg");
         }
     }

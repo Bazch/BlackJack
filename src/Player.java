@@ -3,16 +3,14 @@ public class Player {
 
     protected ArrayList<Cards> hand;
     protected int score;
-    protected String playerID;
+    protected int playerID;
 
-    public Player(String playerID) {
+    public Player(int playerID) {
         this.hand = new ArrayList<Cards>();
         this.score = 0;
         this.playerID = playerID;
     }
-
     public void speel(){
-
         }
 
     //GETTERS AND SETTERS
@@ -30,16 +28,17 @@ public class Player {
     }
 
     public void showHand() {
-        System.out.print("\nDe hand van "+playerID+":\n");
+        System.out.print("\nDe hand van speler "+playerID+":\n");
             for (int i = 0; i < hand.size(); i++) {
                 System.out.print(hand.get(i).getSuit() + " " + hand.get(i).getRank() + "  ");
             }
             System.out.println(" ");
     }
-
-
     public int berekenHand(){
-
+        for (int i = 0; i < hand.size(); i++) {
+            score += hand.get(i).getValue();
+                    }
+        System.out.println(score);
         return score;
     }
 }
