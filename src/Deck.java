@@ -6,7 +6,6 @@ public class Deck {
     //VARIABLES
     private ArrayList<Cards> content;
 
-
     //CONSTRUCTOR
     public Deck() {
         content = new ArrayList<Cards>();
@@ -24,7 +23,6 @@ public class Deck {
     public void setContent(ArrayList<Cards> content) {
         this.content = content;
     }
-
 
     //METHODS
     public void showDeck(){
@@ -46,28 +44,49 @@ public class Deck {
 //        }
     }
 
-    public void drawCard(Player speler) {
+    public void startDealer(Dealer dealer){
         if(content.size() > 0) {
-            System.out.println("\nU heeft een: " + content.get(0).getSuit() + " " + content.get(0).getRank() + "\n" +
-                    "de waarde is: " + content.get(0).getValue());
-            speler.setHand(content.get(0));
+            System.out.println("De dealer heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank()+"\n"+
+                    "de waarde is: "+(content.get(0).getValue()+"\n"));
+            dealer.setHand(content.get(0));
             content.remove(0);
+            dealer.setHand(content.get(0));
+            content.remove(0);
+        }else {
+            System.out.println("\nDeck is leeg");
+        }
+    }
 
-        }else{
+    public void drawDealer(Dealer dealer){
+        if (content.size() > 0) {
+            System.out.println("Het huis heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
+            dealer.setHand(content.get(0));
+            content.remove(0);
+        } else {
             System.out.println("\nDeck is leeg");
         }
     }
 
     public void drawTwo(Player speler){
         if(content.size() > 0) {
-            System.out.println("\nU heeft een: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " " +
+            System.out.println("Speler "+speler.playerID+" heeft: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " & " +
                     content.get(1).getSuit() + " " + content.get(1).getRank() + "\n" +
-                    "de waarde is: " + (content.get(0).getValue() + content.get(1).getValue()));
+                    "de waarde is: " + (content.get(0).getValue() + content.get(1).getValue())+"\n");
             speler.setHand(content.get(0));
             content.remove(0);
             speler.setHand(content.get(0));
             content.remove(0);
         }else {
+            System.out.println("\nDeck is leeg");
+        }
+    }
+
+    public void drawCard(Participant speler) {
+        if (content.size() > 0) {
+            System.out.println("Speler "+speler.playerID+" heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
+            speler.setHand(content.get(0));
+            content.remove(0);
+        } else {
             System.out.println("\nDeck is leeg");
         }
     }

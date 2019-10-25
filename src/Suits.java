@@ -1,16 +1,16 @@
 public enum Suits {
     HARTEN ("rood"),
     KLAVER ("zwart"),
-    SCHOPPEN(" zwart"),
+    SCHOPPEN("zwart"),
     RUITEN ("rood");
 
-    public final String kleur;
+    public final String colour;
 
-    private Suits(String kleur){
-        this.kleur = kleur;
+    private Suits(String colour){
+        this.colour = colour;
     }
 
-    public String getKleur() {
-        return kleur;
+    public String getColour() {
+        return colour;
     }
 }

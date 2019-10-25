@@ -10,6 +10,7 @@ public class Cards {
         this.rank = rank;
         value = getRank().getRankValue();
     }
+
     //GETTERS & SETTERS
     public Suits getSuit() {
         return suit;

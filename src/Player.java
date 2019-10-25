@@ -1,44 +1,32 @@
 import java.util.ArrayList;
-public class Player {
+import java.util.List;
 
-    protected ArrayList<Cards> hand;
-    protected int score;
-    protected int playerID;
+public class Player extends Participant {
 
-    public Player(int playerID) {
-        this.hand = new ArrayList<Cards>();
-        this.score = 0;
-        this.playerID = playerID;
+
+    //CONSTRUCTOR
+    public Player(String name, int playerID) {
+        super(name, playerID);
     }
-    public void speel(){
+
+    public boolean playGame(){
+        if(score == 21){
+            System.out.println("U heeft 21!\n");
+            return false;
+        }else if(score > 21){
+            System.out.println("Helaas, u bent kapot\n");
+            return false;
+        }else{
+            return true;
         }
-
-    //GETTERS AND SETTERS
-    public ArrayList<Cards> getHand() {
-        return hand;
-    }
-    public void setHand(Cards getrokkenKaart) {
-        this.hand.add(getrokkenKaart);
-    }
-    public int getScore() {
-        return score;
-    }
-    public void setScore(int score) {
-        this.score = score;
     }
 
-    public void showHand() {
-        System.out.print("\nDe hand van speler "+playerID+":\n");
-            for (int i = 0; i < hand.size(); i++) {
-                System.out.print(hand.get(i).getSuit() + " " + hand.get(i).getRank() + "  ");
-            }
-            System.out.println(" ");
-    }
-    public int berekenHand(){
-        for (int i = 0; i < hand.size(); i++) {
-            score += hand.get(i).getValue();
-                    }
-        System.out.println(score);
-        return score;
-    }
+//    public int berekenHand() {
+//        for (int i = 0; i < hand.size(); i++) {
+//            score += hand.get(i).getValue();
+//        }
+//        System.out.println("De score van speler " + playerID + " = " + score);
+//        return score;
+//    }
+
 }

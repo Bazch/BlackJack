@@ -13,14 +13,16 @@ public enum Ranks {
     HEER(10),
     AAS(11);
 
+    private  int rankValue;
 
-    private final int rankValue;
-
-    private Ranks (int value){
+        private Ranks (int value){
         this.rankValue = value;
     }
 
     public int getRankValue() {
         return rankValue;
+    }
+    public void setRankValue(int rankValue) {
+        this.rankValue = rankValue;
     }
 }
