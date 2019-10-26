@@ -41,11 +41,12 @@ public class BlackJack extends Game {
                 switch(input){
                     case 'k':
                         bank.dealCard(i);
-                        calcPointsPlayer(i);
+                        i.calcPoints();
+                        i.checkForAce();
                         break;
                     case 'p':
                         i.showHand();
-                        calcPointsPlayer(i);
+                        i.calcPoints();
                         continue newPlayer;
                     case 'q':
                         System.out.println("u stopt");
@@ -58,29 +59,12 @@ public class BlackJack extends Game {
     }
 
     public void bankLoop(){
-        calcPointsDealer(bank);
+        bank.calcPoints();
+        bank.checkForAce();
         do{
             bank.drawSelf(bank);
-            calcPointsDealer(bank);
+            bank.calcPoints();
         }while(bank.score <17);
-    }
-
-    public void calcPointsPlayer(Player speler){
-        int punten = 0;
-        for(Cards i : speler.hand){
-            punten+= i.getValue();
-        }
-        speler.setScore(punten);
-        System.out.println("Uw score = "+speler.getScore()+"\n");
-    }
-
-    public void calcPointsDealer(Dealer dealer){
-        int punten = 0;
-        for(Cards i : dealer.hand){
-            punten+= i.getValue();
-        }
-        dealer.setScore(punten);
-        System.out.println("De bank heeft: "+dealer.getScore()+"\n");
     }
 
     public void calcMaxPlayers() {

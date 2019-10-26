@@ -37,4 +37,8 @@ public abstract class Participant {
         }
         System.out.println("");
     }
+    public abstract void calcPoints();
+
+    public void checkForAce(){}
+
 }

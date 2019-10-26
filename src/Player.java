@@ -21,6 +21,26 @@ public class Player extends Participant {
         }
     }
 
+    public void calcPoints(){
+        int punten = 0;
+        for(Cards i : this.hand){
+            punten+= i.getValue();
+        }
+        this.setScore(punten);
+    }
+
+    public void checkForAce(){
+        if(this.getScore() > 21 ) {
+            for (Cards i : this.hand) {
+                if (i.getValue() == 11){
+                    i.setValue(1);
+                }
+            }
+            calcPoints();
+        }
+        System.out.println("Uw score = "+this.getScore()+"\n");
+    }
+
 //    public int berekenHand() {
 //        for (int i = 0; i < hand.size(); i++) {
 //            score += hand.get(i).getValue();
