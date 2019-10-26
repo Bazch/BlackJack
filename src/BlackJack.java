@@ -1,11 +1,13 @@
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class BlackJack extends Game {
 
     //VARIABLES
-    static Scanner in = new Scanner(System.in);
+    static Scanner IN = new Scanner(System.in);
     private int maximumPlayers;
     private List<Player> playerList;
     private boolean quit;
@@ -30,14 +32,23 @@ public class BlackJack extends Game {
         calcWhoWins();
     }
 
-    public void playerLoop(){
+    public void playerLoop() {
         newPlayer:
         for(Player i : playerList) {
+            System.out.println("Speler "+ i.getPlayerID() +" is aan de beurt.");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+//            i.placeBet();
             bank.dealStart(i);
             do{
+                i.calcPoints();
+                i.checkForAce();
                 i.playGame();
                 System.out.println("Druk [k] voor kaart, [p] voor pas, of [q] for stoppen.");
-                char input = in.next().charAt(0);
+                char input = IN.next().charAt(0);
                 switch(input){
                     case 'k':
                         bank.dealCard(i);
@@ -45,12 +56,13 @@ public class BlackJack extends Game {
                         i.checkForAce();
                         break;
                     case 'p':
+                        System.out.println("U past.");
                         i.showHand();
                         i.calcPoints();
                         continue newPlayer;
                     case 'q':
-                        System.out.println("u stopt");
-                        //set player 'quit' boolean to true, removing him/her from the game in the end
+                        System.out.println("U stopt.");
+                        i.setIsPlaying(false);
                         continue newPlayer;
                 }
             } while(i.playGame());
@@ -61,16 +73,34 @@ public class BlackJack extends Game {
     public void bankLoop(){
         bank.calcPoints();
         bank.checkForAce();
-        do{
+        while(bank.getScore() <17);{
             bank.drawSelf(bank);
             bank.calcPoints();
-        }while(bank.score <17);
+            bank.checkForAce();
+            if(bank.getScore() >21){
+                System.out.println("De bank is kapot!");
+            }
+        }
     }
 
     public void calcMaxPlayers() {
-        System.out.println("Voer a.u.b. het aantal spelers in");
-        int invoer = Integer.parseInt(in.next());
+        int invoer;
+        do {
+            System.out.println("Voer a.u.b. het aantal spelers in");
+            while (!IN.hasNextInt()) {
+                System.out.println("Dat is geen geldige invoer. Voer a.u.b. het aantal spelers in.");
+                IN.next();
+            }
+            invoer = IN.nextInt();
+        } while (invoer <= 0);
+        System.out.println("U heeft gekozen voor "+invoer+" spelers.");
         setMaximumSpelers(invoer);
+        System.out.println("Het spel begint. Succes!\n");
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createPlayers(int maximumPlayers) {
@@ -83,22 +113,32 @@ public class BlackJack extends Game {
 
     public void calcWhoWins(){
         for(Player i : playerList) {
-            System.out.println("Speler " + i.playerID + " had: " + i.score);
-            if (i.score > 21){
-                System.out.println("U bent kapot.");
-                //lose bet
-            }else if(i.score == bank.score){
-                System.out.println("Gelijkspel!");
-                //gain bet back but no profits
-            }else if(i.score > bank.score && i.score <=21) {
-                System.out.println("U wint!");
-                //gain 2x bet
-            }else if(i.score < bank.score && bank.score >21){
-                System.out.println("U wint!");
-                //gain 2x bet
+            System.out.println("\nSpeler " + i.getPlayerID() + " had: " + i.getScore());
+            if(i.getIsPlaying()) {
+                if (i.getScore() > 21) {
+                    System.out.println("U bent kapot.");
+                } else if (i.getScore() == bank.getScore()) {
+                    System.out.println("Gelijkspel!");
+                    i.setMoney(i.getMoney() + i.getBet());
+                    System.out.println("U ontvangt " + i.getBet() + " euro. Uw totaal is: " + i.getMoney() + " euro.");
+                } else if (i.getScore() > bank.getScore() && i.getScore() <= 21) {
+                    System.out.println("U wint!");
+                    i.setMoney(i.getMoney() + (i.getBet() * 2));
+                    System.out.println("U ontvangt " + i.getBet() + " euro. Uw totaal is: " + i.getMoney() + " euro.");
+                } else if (i.getScore() < bank.getScore() && bank.getScore() > 21) {
+                    System.out.println("U wint!");
+                    i.setMoney(i.getMoney() + (i.getBet() * 2));
+                    System.out.println("U ontvangt " + i.getBet() + " euro. Uw totaal is: " + i.getMoney() + " euro.");
+                } else {
+                    System.out.println("De bank wint.");
+                }
             }else{
-                System.out.println("Huis wint.");
-                //lose bet
+                System.out.println("Speler is gestopt.");
+            }
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

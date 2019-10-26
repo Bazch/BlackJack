@@ -2,10 +2,13 @@ import java.util.ArrayList;
 
 public abstract class Participant {
 
-    protected ArrayList<Cards> hand;
-    protected int score;
-    protected int playerID;
-    protected String name;
+    private ArrayList<Cards> hand;
+    private int score;
+    private int playerID;
+    private String name;
+    private boolean isPlaying;
+    private int money;
+
 
     //CONSTRUCTOR
     public Participant(String name, int playerID) {
@@ -13,32 +16,51 @@ public abstract class Participant {
         this.score = 0;
         this.playerID = playerID;
         this.name = name;
+        this.isPlaying = true;
+        this.money = 20;
     }
 
     //GETTERS & SETTERS
     public ArrayList<Cards> getHand() {
         return hand;
     }
-    public int getScore() {
-        return score;
-    }
     public void setHand(Cards getrokkenKaart) {
         this.hand.add(getrokkenKaart);
+    }
+    public int getScore() {
+        return score;
     }
     public void setScore(int score) {
         this.score = score;
     }
-
-    //METHODS
-    public void showHand() {
-        System.out.print("De hand van speler " + playerID + ":\n");
-        for (int i = 0; i < hand.size(); i++) {
-            System.out.print(hand.get(i).getSuit() + " " + hand.get(i).getRank() + "  ");
-        }
-        System.out.println("");
+    public int getPlayerID() {
+        return playerID;
     }
-    public abstract void calcPoints();
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public boolean getIsPlaying() {
+        return isPlaying;
+    }
+    public void setIsPlaying(boolean playing) {
+        isPlaying = playing;
+    }
+    public int getMoney() {
+        return money;
+    }
+    public void setMoney(int money) {
+        this.money = money;
+    }
 
-    public void checkForAce(){}
+    //ABSTRACT METHODS
+    public abstract void showHand();
+    public abstract void calcPoints();
+    public abstract void checkForAce();
 
 }

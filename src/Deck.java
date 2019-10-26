@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 public class Deck {
 
@@ -59,7 +60,13 @@ public class Deck {
 
     public void drawDealer(Dealer dealer){
         if (content.size() > 0) {
-            System.out.println("Het huis heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
+            System.out.println("Hit");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("De bank heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
             dealer.setHand(content.get(0));
             content.remove(0);
         } else {
@@ -69,9 +76,8 @@ public class Deck {
 
     public void drawTwo(Player speler){
         if(content.size() > 0) {
-            System.out.println("Speler "+speler.playerID+" heeft: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " & " +
-                    content.get(1).getSuit() + " " + content.get(1).getRank() + "\n" +
-                    "de waarde is: " + (content.get(0).getValue() + content.get(1).getValue())+"\n");
+            System.out.println("Speler "+ speler.getPlayerID() +" krijgt: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " & " +
+                    content.get(1).getSuit() + " " + content.get(1).getRank() + "\n");
             speler.setHand(content.get(0));
             content.remove(0);
             speler.setHand(content.get(0));
@@ -83,7 +89,13 @@ public class Deck {
 
     public void drawCard(Participant speler) {
         if (content.size() > 0) {
-            System.out.println("Speler "+speler.playerID+" heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
+            System.out.println("Hit");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Speler "+ speler.getPlayerID() +" heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
             speler.setHand(content.get(0));
             content.remove(0);
         } else {
