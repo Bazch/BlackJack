@@ -24,8 +24,14 @@ public abstract class Participant {
     public ArrayList<Cards> getHand() {
         return hand;
     }
-    public void setHand(Cards getrokkenKaart) {
-        this.hand.add(getrokkenKaart);
+    public void clearHand(){
+        int handSize = this.hand.size();
+        for (int i = 0; i <handSize ; i++) {
+            this.hand.remove(0);
+        }
+    }
+    public void setHand(Cards kaart) {
+        this.hand.add(kaart);
     }
     public int getScore() {
         return score;

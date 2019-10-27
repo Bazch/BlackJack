@@ -32,7 +32,7 @@ public class Dealer extends Participant {
       deck.drawTwo(speler);
    }
 
-   public void dealCard(Participant speler){
+   public void dealCard(Player speler){
       deck.drawCard(speler);
    }
 
@@ -53,14 +53,15 @@ public class Dealer extends Participant {
    }
 
    public void checkForAce(){
+      calcPoints();
       if(this.getScore() > 21 ) {
          for (int i=0 ; i < this.getHand().size() ; i++) {
             if (this.getHand().get(i).getValue() == 11){
                this.getHand().get(i).setValue(1);
                i = this.getHand().size();
+               calcPoints();
             }
          }
-         calcPoints();
       }
       System.out.println("De bank heeft: "+this.getScore());
       try {
@@ -68,6 +69,10 @@ public class Dealer extends Participant {
       } catch (InterruptedException e) {
          e.printStackTrace();
       }
+   }
+
+   public void newDeck(){
+      deck.resetDeck();
    }
 
 }

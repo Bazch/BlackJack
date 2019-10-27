@@ -77,7 +77,7 @@ public class Deck {
     public void drawTwo(Player speler){
         if(content.size() > 0) {
             System.out.println("Speler "+ speler.getPlayerID() +" krijgt: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " & " +
-                    content.get(1).getSuit() + " " + content.get(1).getRank() + "\n");
+                    content.get(1).getSuit() + " " + content.get(1).getRank());
             speler.setHand(content.get(0));
             content.remove(0);
             speler.setHand(content.get(0));
@@ -87,7 +87,7 @@ public class Deck {
         }
     }
 
-    public void drawCard(Participant speler) {
+    public void drawCard(Player speler) {
         if (content.size() > 0) {
             System.out.println("Hit");
             try {
@@ -95,12 +95,26 @@ public class Deck {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Speler "+ speler.getPlayerID() +" heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
+            System.out.println(speler.getName()+" heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
             speler.setHand(content.get(0));
             content.remove(0);
         } else {
             System.out.println("\nDeck is leeg");
         }
+    }
+
+    public void resetDeck(){
+        System.out.println("Getting new deck.");
+        int deckSize = content.size();
+        for (int i = 0; i < deckSize; i++){
+            content.remove(0);
+        }
+        for (Suits s : Suits.values()) {
+            for (Ranks r : Ranks.values()) {
+                content.add(new Cards(s, r));
+            }
+        }
+        Collections.shuffle(content);
     }
 
 }

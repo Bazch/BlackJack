@@ -6,6 +6,7 @@ public class Player extends Participant {
     //VARIABLES
     static Scanner IN = new Scanner(System.in);
     private int bet;
+    private int input;
 
     //CONSTRUCTOR
     public Player(String name, int playerID) {
@@ -44,7 +45,7 @@ public class Player extends Participant {
     }
 
     public void showHand() {
-        System.out.print("De hand van speler " + getPlayerID() + ":\n");
+        System.out.print("De hand van "+getName()+":\n");
         for (int i = 0; i < getHand().size(); i++) {
             System.out.print(getHand().get(i).getSuit() + " " + getHand().get(i).getRank() + "  ");
         }
@@ -65,16 +66,17 @@ public class Player extends Participant {
     }
 
     public void checkForAce(){
+        calcPoints();
         if(this.getScore() > 21 ) {
             for (int i=0 ; i < this.getHand().size() ; i++) {
                 if (this.getHand().get(i).getValue() == 11){
                     this.getHand().get(i).setValue(1);
                     i = this.getHand().size();
+                    calcPoints();
                 }
             }
-            calcPoints();
         }
-        System.out.println("Uw score = "+this.getScore()+"\n");
+        System.out.println("punten: "+this.getScore());
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
@@ -83,11 +85,23 @@ public class Player extends Participant {
     }
 
     public void placeBet() {
-        System.out.println("U heeft nog " + this.getMoney() + " euro");
         System.out.println("Plaats a.u.b. uw inzet");
-        while (!IN.hasNextInt() && IN.nextInt() > this.getMoney()) {
-            System.out.println("Dat is geen geldige invoer, probeer opnieuw. U heeft " + this.getMoney() + " euro.");
-            IN.next();
+        do {
+            System.out.println("Uw inzet moet minstens 1 zijn, en minder dan (of gelijk aan) uw huidige totaal. Uw totaal is: "
+                    +this.getMoney()+" euro");
+            while (!IN.hasNextInt()) {
+                System.out.println("Dat is geen geldige invoer, probeer opnieuw.");
+                IN.next();
+            }
+            input = IN.nextInt();
+        } while (input <= 0 || input > this.getMoney());
+        this.setBet(input);
+        this.setMoney(this.getMoney() - this.getBet());
+        System.out.println("Bedankt  voor uw inzet. Uw totaal is nu: "+this.getMoney()+" euro\n");
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
