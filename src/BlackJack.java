@@ -48,7 +48,6 @@ public class BlackJack extends Game {
             i.placeBet();
             bank.dealStart(i);
             i.checkForAce();
-            i.playGame();
             while(i.playGame()){
                 System.out.println("Druk [k] voor kaart, [p] voor pas, of [q] for stoppen.");
                 char input = IN.next().charAt(0);
@@ -56,7 +55,6 @@ public class BlackJack extends Game {
                     case 'k':
                         bank.dealCard(i);
                         i.checkForAce();
-                        i.playGame();
                         break;
                     case 'p':
                         System.out.println("U past.");
@@ -114,9 +112,9 @@ public class BlackJack extends Game {
 
     public void createPlayers(int maximumPlayers) {
         playerList = new ArrayList<Player>();
+        IN.nextLine();
         for (int i = 1; i <= maximumPlayers; i++) {
             System.out.println("Speler "+i+" . Voer a.u.b. uw naam in");
-            IN.nextLine();
             String naam = IN.nextLine();
             playerList.add(new Player(naam, i));
         }
