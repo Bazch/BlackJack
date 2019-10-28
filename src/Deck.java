@@ -8,7 +8,7 @@ public class Deck {
     private ArrayList<Cards> content;
 
     //CONSTRUCTOR
-    public Deck() {
+    Deck() {
         content = new ArrayList<Cards>();
         for (Suits s : Suits.values()) {
             for (Ranks r : Ranks.values()) {
@@ -36,8 +36,9 @@ public class Deck {
         }
     }
 
-    public void shuffle() {
+    void shuffle() {
         System.out.println("\nShuffling deck");
+        pause(2);
         Collections.shuffle(content);
 //        System.out.println("Shuffled deck: ");
 //        for (int i = 0; i < content.size(); i++) {
@@ -45,9 +46,9 @@ public class Deck {
 //        }
     }
 
-    public void startDealer(Dealer dealer){
+    void startDealer(Dealer dealer){
         if(content.size() > 0) {
-            System.out.println("De dealer heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank()+"\n"+
+            System.out.println("\nDe dealer heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank()+"\n"+
                     "de waarde is: "+(content.get(0).getValue()+"\n"));
             dealer.setHand(content.get(0));
             content.remove(0);
@@ -58,7 +59,7 @@ public class Deck {
         }
     }
 
-    public void drawDealer(Dealer dealer){
+    void drawDealer(Dealer dealer){
         if (content.size() > 0) {
             System.out.println("Hit");
             try {
@@ -74,9 +75,9 @@ public class Deck {
         }
     }
 
-    public void drawTwo(Player speler){
+    void drawTwo(Player speler){
         if(content.size() > 0) {
-            System.out.println("Speler "+ speler.getPlayerID() +" krijgt: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " & " +
+            System.out.println(speler.getName()+" krijgt: " + content.get(0).getSuit() + " " + content.get(0).getRank() + " & " +
                     content.get(1).getSuit() + " " + content.get(1).getRank());
             speler.setHand(content.get(0));
             content.remove(0);
@@ -87,7 +88,7 @@ public class Deck {
         }
     }
 
-    public void drawCard(Player speler) {
+    void drawCard(Player speler) {
         if (content.size() > 0) {
             System.out.println("Hit");
             try {
@@ -103,8 +104,8 @@ public class Deck {
         }
     }
 
-    public void resetDeck(){
-        System.out.println("Getting new deck.");
+    void resetDeck(){
+        System.out.println("\nNieuwe ronde");
         int deckSize = content.size();
         for (int i = 0; i < deckSize; i++){
             content.remove(0);
@@ -114,7 +115,16 @@ public class Deck {
                 content.add(new Cards(s, r));
             }
         }
-        Collections.shuffle(content);
+        pause(2);
+        shuffle();
+    }
+
+    private void pause(int time){
+        try {
+            TimeUnit.SECONDS.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

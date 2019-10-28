@@ -6,7 +6,6 @@ public class Player extends Participant {
     //VARIABLES
     static Scanner IN = new Scanner(System.in);
     private int bet;
-    private int input;
 
     //CONSTRUCTOR
     public Player(String name, int playerID) {
@@ -25,19 +24,11 @@ public class Player extends Participant {
     public boolean playGame(){
         if(getScore() == 21){
             System.out.println("U heeft 21!\n");
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            pause(2);
             return false;
         }else if(getScore() > 21){
             System.out.println("Helaas, u bent kapot\n");
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+           pause(2);
             return false;
         }else{
             return true;
@@ -50,11 +41,7 @@ public class Player extends Participant {
             System.out.print(getHand().get(i).getSuit() + " " + getHand().get(i).getRank() + "  ");
         }
         System.out.println("\n"+ getScore() +" punten\n");
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        pause(3);
     }
 
     public void calcPoints(){
@@ -77,15 +64,12 @@ public class Player extends Participant {
             }
         }
         System.out.println("punten: "+this.getScore());
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        pause(1);
     }
 
     public void placeBet() {
         System.out.println("Plaats a.u.b. uw inzet");
+        int input;
         do {
             System.out.println("Uw inzet moet minstens 1 zijn, en minder dan (of gelijk aan) uw huidige totaal. Uw totaal is: "
                     +this.getMoney()+" euro");
@@ -98,19 +82,7 @@ public class Player extends Participant {
         this.setBet(input);
         this.setMoney(this.getMoney() - this.getBet());
         System.out.println("Bedankt  voor uw inzet. Uw totaal is nu: "+this.getMoney()+" euro\n");
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        pause(1);
     }
-
-//    public int berekenHand() {
-//        for (int i = 0; i < hand.size(); i++) {
-//            score += hand.get(i).getValue();
-//        }
-//        System.out.println("De score van speler " + playerID + " = " + score);
-//        return score;
-//    }
 
 }

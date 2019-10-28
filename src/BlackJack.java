@@ -36,15 +36,11 @@ public class BlackJack extends Game {
         }
     }
 
-    public void playerLoop() {
+    private void playerLoop() {
         newPlayer:
         for(Player i : playerList) {
             System.out.println(i.getName()+" is aan de beurt.");
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            pause(1);
             i.placeBet();
             bank.dealStart(i);
             i.checkForAce();
@@ -58,28 +54,20 @@ public class BlackJack extends Game {
                         break;
                     case 'p':
                         System.out.println("U past.");
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        pause(1);
                         i.showHand();
                         continue newPlayer;
                     case 'q':
                         System.out.println("U stopt.");
                         i.setIsPlaying(false);
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        pause(1);
                         continue newPlayer;
                 }
             }
         }
     }
 
-    public void bankLoop(){
+    private void bankLoop(){
         bank.checkForAce();
         while(bank.getScore() <17){
             bank.drawSelf(bank);
@@ -88,9 +76,10 @@ public class BlackJack extends Game {
                 System.out.println("De bank is kapot!");
             }
         }
+        System.out.println("De bank stopt");
     }
 
-    public void calcMaxPlayers() {
+    private void calcMaxPlayers() {
         int invoer;
         do {
             System.out.println("Voer a.u.b. het aantal spelers in");
@@ -102,7 +91,6 @@ public class BlackJack extends Game {
         } while (invoer <= 0);
         System.out.println("U heeft gekozen voor "+invoer+" spelers.");
         setMaximumSpelers(invoer);
-        System.out.println("Het spel begint. Succes!\n");
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
@@ -110,7 +98,7 @@ public class BlackJack extends Game {
         }
     }
 
-    public void createPlayers(int maximumPlayers) {
+    private void createPlayers(int maximumPlayers) {
         playerList = new ArrayList<Player>();
         IN.nextLine();
         for (int i = 1; i <= maximumPlayers; i++) {
@@ -118,9 +106,15 @@ public class BlackJack extends Game {
             String naam = IN.nextLine();
             playerList.add(new Player(naam, i));
         }
+        System.out.println("Het spel begint. Succes!");
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void calcWhoWins(){
+    private void calcWhoWins(){
         for(Player i : playerList) {
             System.out.println("\n"+i.getName()+" had: " + i.getScore());
             if(i.getIsPlaying()) {
@@ -144,31 +138,46 @@ public class BlackJack extends Game {
             }else{
                 System.out.println("Speler is gestopt.");
             }
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            pause(2);
         }
     }
 
-    public void resetGame(){
+    private void resetGame(){
         int playerListSize = playerList.size();
         for(int i = 0; i < playerListSize; i++) {
             playerList.get(i).clearHand();
         }
+        bank.clearHand();
+        bank.newDeck();
+        removePlayers();
+        if(playerList.size() == 0){
+            System.out.println("\nEr zijn geen spelers meer in het spel. Het spel stopt.");
+        }
+        }
+
+    private void removePlayers(){
         Iterator<Player> itr = playerList.iterator();
         while (itr.hasNext()) {
             Player i = itr.next();
             if (!i.getIsPlaying()){
-                System.out.println(i.getName()+" is gestopt.");
+                System.out.println("\n"+i.getName()+" is gestopt.");
                 itr.remove();
+                pause(1);
             }else if(i.getMoney() ==0){
-                System.out.println(i.getName()+" heeft niet genoeg geld. U bent uit het spel verwijdert.");
+                System.out.println("\n"+i.getName()+" heeft niet genoeg geld. U bent uit het spel verwijdert.");
                 itr.remove();
+                pause(1);
             }
         }
-        bank.clearHand();
-        bank.newDeck();
+
+    }
+
+    private void pause(int time){
+            try {
+                TimeUnit.SECONDS.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
 }

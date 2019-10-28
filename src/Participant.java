@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public abstract class Participant {
 
@@ -69,4 +70,12 @@ public abstract class Participant {
     public abstract void calcPoints();
     public abstract void checkForAce();
 
+    //METHODS
+    public void pause(int time) {
+        try {
+            TimeUnit.SECONDS.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
