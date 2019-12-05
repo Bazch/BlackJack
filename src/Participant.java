@@ -25,12 +25,11 @@ public abstract class Participant {
     public ArrayList<Cards> getHand() {
         return hand;
     }
-    public void clearHand(){
-        int handSize = this.hand.size();
-        for (int i = 0; i <handSize ; i++) {
-            this.hand.remove(0);
-        }
+
+    public void clearHand() {
+        this.hand.clear();
     }
+
     public void setHand(Cards kaart) {
         this.hand.add(kaart);
     }
@@ -67,7 +66,9 @@ public abstract class Participant {
 
     //ABSTRACT METHODS
     public abstract void showHand();
+
     public abstract void calcPoints();
+
     public abstract void checkForAce();
 
     //METHODS

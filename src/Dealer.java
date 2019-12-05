@@ -2,7 +2,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Dealer extends Participant {
 
-   static Deck deck = new Deck();
+   Deck deck = new Deck(6);
 
    public Dealer(String name, int playerID) {
       super(name, playerID);
@@ -10,7 +10,7 @@ public class Dealer extends Participant {
    }
 
    //METHODS
-   public static void dealSelf(Dealer dealer){
+   public void dealSelf(Dealer dealer){
       deck.startDealer(dealer);
       try {
          TimeUnit.SECONDS.sleep(2);
@@ -19,7 +19,7 @@ public class Dealer extends Participant {
       }
    }
 
-   public static void drawSelf(Dealer dealer){
+   public void drawSelf(Dealer dealer){
       deck.drawDealer(dealer);
       try {
          TimeUnit.SECONDS.sleep(1);
@@ -71,8 +71,8 @@ public class Dealer extends Participant {
       }
    }
 
-   public void newDeck(){
-      deck.resetDeck();
+   public void newDeck(int numberOfDecks){
+      deck.resetDeck(numberOfDecks);
    }
 
 }

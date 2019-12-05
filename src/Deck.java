@@ -8,11 +8,22 @@ public class Deck {
     private ArrayList<Cards> content;
 
     //CONSTRUCTOR
+
     Deck() {
         content = new ArrayList<Cards>();
         for (Suits s : Suits.values()) {
             for (Ranks r : Ranks.values()) {
                 content.add(new Cards(s, r));
+            }
+        }
+    }
+    Deck(int numberofDecks) {
+        content = new ArrayList<Cards>();
+        for (int i = 0; i < numberofDecks; i++) {
+            for (Suits s : Suits.values()) {
+                for (Ranks r : Ranks.values()) {
+                    content.add(new Cards(s, r));
+                }
             }
         }
     }
@@ -62,11 +73,7 @@ public class Deck {
     void drawDealer(Dealer dealer){
         if (content.size() > 0) {
             System.out.println("Hit");
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            pause(1);
             System.out.println("De bank heeft: "+content.get(0).getSuit()+" "+content.get(0).getRank());
             dealer.setHand(content.get(0));
             content.remove(0);
@@ -104,15 +111,14 @@ public class Deck {
         }
     }
 
-    void resetDeck(){
+    void resetDeck(int numberOfDecks){
         System.out.println("\nNieuwe ronde");
-        int deckSize = content.size();
-        for (int i = 0; i < deckSize; i++){
-            content.remove(0);
-        }
-        for (Suits s : Suits.values()) {
-            for (Ranks r : Ranks.values()) {
-                content.add(new Cards(s, r));
+        content.clear();
+        for(int i = 0; i < numberOfDecks; i++) {
+            for (Suits s : Suits.values()) {
+                for (Ranks r : Ranks.values()) {
+                    content.add(new Cards(s, r));
+                }
             }
         }
         pause(2);

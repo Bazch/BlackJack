@@ -1,4 +1,3 @@
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +10,6 @@ public class BlackJack extends Game {
     static Scanner IN = new Scanner(System.in);
     private int maximumPlayers;
     private List<Player> playerList;
-    private boolean quit;
     static Dealer bank = new Dealer("bank", 0);
 
     //GETTERS & SETTERS
@@ -91,11 +89,7 @@ public class BlackJack extends Game {
         } while (invoer <= 0);
         System.out.println("U heeft gekozen voor "+invoer+" spelers.");
         setMaximumSpelers(invoer);
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        pause(1);
     }
 
     private void createPlayers(int maximumPlayers) {
@@ -107,11 +101,7 @@ public class BlackJack extends Game {
             playerList.add(new Player(naam, i));
         }
         System.out.println("Het spel begint. Succes!");
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        pause(1);
     }
 
     private void calcWhoWins(){
@@ -148,7 +138,7 @@ public class BlackJack extends Game {
             playerList.get(i).clearHand();
         }
         bank.clearHand();
-        bank.newDeck();
+        bank.newDeck(maximumPlayers);
         removePlayers();
         if(playerList.size() == 0){
             System.out.println("\nEr zijn geen spelers meer in het spel. Het spel stopt.");
@@ -156,6 +146,9 @@ public class BlackJack extends Game {
         }
 
     private void removePlayers(){
+
+//        playerList.removeIf( (s) -> {if (!s.getIsPlaying() || s.getMoney() == 0) return true; else return false;});
+
         Iterator<Player> itr = playerList.iterator();
         while (itr.hasNext()) {
             Player i = itr.next();
@@ -164,7 +157,7 @@ public class BlackJack extends Game {
                 itr.remove();
                 pause(1);
             }else if(i.getMoney() ==0){
-                System.out.println("\n"+i.getName()+" heeft niet genoeg geld. U bent uit het spel verwijdert.");
+                System.out.println("\n"+i.getName()+" heeft niet genoeg geld. U bent uit het spel verwijderd.");
                 itr.remove();
                 pause(1);
             }
@@ -173,11 +166,12 @@ public class BlackJack extends Game {
     }
 
     private void pause(int time){
-            try {
-                TimeUnit.SECONDS.sleep(time);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            TimeUnit.SECONDS.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+    }
 
 }
